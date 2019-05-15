@@ -7,6 +7,11 @@ public class Contact {
 	private String surname;
 	private Integer phoneNumber;
 	
+	@Override
+	public String toString() {
+		return "Contact [id=" + id + ", name=" + name + ", surname=" + surname + ", phoneNumber=" + phoneNumber + "]";
+	}
+
 	public Contact() {
 		
 	}

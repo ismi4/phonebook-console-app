@@ -9,10 +9,10 @@ public interface ContactDAO {
 	
 	public Contact getContact(int id, int phoneNumber) throws SQLException;
 
-	public void addContact(String name, String surname, int phoneNumber) throws SQLException;
+	public void addContact(int id, String name, String surname, int phoneNumber) throws SQLException;
 	
-	public void editContact(int id, String newName, String newSurname, int newPhoneNumber) throws SQLException;
+	public void editContact(int id, String newName, String newSurname, int newPhoneNumber, int phoneNumber) throws SQLException;
 	
-	public void deleteContact(int id) throws SQLException;
+	public void deleteContact(int id, int phoneNumber) throws SQLException;
 
 }

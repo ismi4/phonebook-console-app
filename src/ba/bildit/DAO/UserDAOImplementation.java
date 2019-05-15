@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import ba.bildit.DTO.Contact;
 import ba.bildit.DTO.User;
 
 public class UserDAOImplementation implements UserDAO {
@@ -11,17 +14,18 @@ public class UserDAOImplementation implements UserDAO {
 	Connection connection = ConnectionManager.getInstance().getConnection();
 	
 	@Override
-	public User getUser(Integer id) throws SQLException {
+	public User getUser(String name, String surname) throws SQLException {
 		
 		User user = null;
 
-		String query = "SELECT * FROM users WHERE id = ?";
+		String query = "SELECT * FROM users WHERE name = ? AND surname = ?";
 
 		ResultSet rs = null;
 
 		try (PreparedStatement statement = connection.prepareStatement(query);) {
 
-			statement.setInt(1, id);
+			statement.setString(1, name);
+			statement.setString(2, surname);
 
 			rs = statement.executeQuery();
 
@@ -53,7 +57,32 @@ public class UserDAOImplementation implements UserDAO {
 
 		}
 	}
+
+	@Override
+	public ArrayList<Contact> retrieveContactsIntoList(int id) throws SQLException {
+		
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		
+		String query = "SELECT * FROM contacts WHERE id = ?";
+
+		ResultSet rs = null;
+
+		try (PreparedStatement statement = connection.prepareStatement(query);) {
+
+			statement.setInt(1, id);
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				contacts.add(new Contact(rs.getInt("id"), rs.getString("name"), 
+						rs.getString("surname"), rs.getInt("phonenumber")));
+			}
+
 		
 	}
+		
+		return contacts;
+		
+	}
+}
 
 

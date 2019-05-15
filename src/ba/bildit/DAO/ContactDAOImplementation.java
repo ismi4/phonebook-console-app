@@ -40,16 +40,17 @@ public class ContactDAOImplementation implements ContactDAO {
 	}
 
 	@Override
-	public void addContact(String name, String surname, int phoneNumber) throws SQLException {
+	public void addContact(int id, String name, String surname, int phoneNumber) throws SQLException {
 
-		String query = "INSERT INTO contacts(name, surname, phonenumber) VALUES (?, ?, ?)";
+		String query = "INSERT INTO contacts(name, surname, phonenumber, id) VALUES (?, ?, ?, ?)";
 
 		try (PreparedStatement statement = connection.prepareStatement(query);) {
 
 			statement.setString(1, name);
 			statement.setString(2, surname);
 			statement.setInt(3, phoneNumber);
-
+			statement.setInt(4, id);
+			
 			statement.executeUpdate();
 
 		}
@@ -57,9 +58,9 @@ public class ContactDAOImplementation implements ContactDAO {
 	}
 
 	@Override
-	public void editContact(int id, String newName, String newSurname, int newPhoneNumber) throws SQLException {
+	public void editContact(int id, String newName, String newSurname, int newPhoneNumber, int phoneNumber) throws SQLException {
 
-		String query = "UPDATE contacts SET name = ?, surname = ? phonenumber = ? WHERE id = ?";
+		String query = "UPDATE contacts SET name = ?, surname = ? phonenumber = ? WHERE id = ? AND WHERE phonenumber = ?";
 
 		try (PreparedStatement statement = connection.prepareStatement(query);) {
 
@@ -67,6 +68,7 @@ public class ContactDAOImplementation implements ContactDAO {
 			statement.setString(2, newSurname);
 			statement.setInt(3, newPhoneNumber);
 			statement.setInt(4, id);
+			statement.setInt(5, phoneNumber);
 
 			statement.executeUpdate();
 
@@ -75,7 +77,7 @@ public class ContactDAOImplementation implements ContactDAO {
 	}
 
 	@Override
-	public void deleteContact(int id) throws SQLException {
+	public void deleteContact(int id, int phoneNumber) throws SQLException {
 
 		String query = "DELETE FROM contacts? WHERE id = ?";
 

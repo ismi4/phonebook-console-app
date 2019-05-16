@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import ba.bildit.DTO.Contact;
 import ba.bildit.DTO.User;
+import ba.bildit.DTO.UserBuilder;
 
 public class UserDAOImplementation implements UserDAO {
 
@@ -31,8 +32,10 @@ public class UserDAOImplementation implements UserDAO {
 
 			if (rs.next()) {
 
-				user = new User(rs.getInt("id"), rs.getString("name"),
-						rs.getString("surname"), rs.getString("password"));
+				user = new UserBuilder(rs.getInt("id")).withName(rs.getString("name"))
+						.withSurname(rs.getString("surname"))
+						.withPassword(rs.getString("password"))
+						.build();
 
 				rs.close();
 			}

@@ -22,6 +22,7 @@ public class MainMenu {
 		
 		init();
 		
+		System.out.println("----- PHONEBOOK: " + currentUser.getName() + " -----");
 		System.out.println("1. Add new contact");
 		System.out.println("2. Edit existing contact");
 		System.out.println("3. Delete existing contact");

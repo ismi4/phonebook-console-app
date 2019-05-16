@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import ba.bildit.DTO.Contact;
+import ba.bildit.DTO.ContactBuilder;
 
 public class ContactDAOImplementation implements ContactDAO {
 
@@ -28,8 +29,10 @@ public class ContactDAOImplementation implements ContactDAO {
 
 			if (rs.next()) {
 
-				contact = new Contact(rs.getInt("id"), rs.getString("name"), rs.getString("surname"),
-						rs.getInt("phonenumber"));
+				contact = new ContactBuilder(rs.getInt("id")).withName(rs.getString("name"))
+						.withSurname(rs.getString("surname")).
+						withPhoneNumber(rs.getInt("phonenumber"))
+						.build();
 
 				rs.close();
 			}
@@ -50,7 +53,7 @@ public class ContactDAOImplementation implements ContactDAO {
 			statement.setString(2, surname);
 			statement.setInt(3, phoneNumber);
 			statement.setInt(4, id);
-			
+
 			statement.executeUpdate();
 
 		}
@@ -58,7 +61,8 @@ public class ContactDAOImplementation implements ContactDAO {
 	}
 
 	@Override
-	public void editContact(int id, String newName, String newSurname, int newPhoneNumber, int phoneNumber) throws SQLException {
+	public void editContact(int id, String newName, String newSurname, int newPhoneNumber, int phoneNumber)
+			throws SQLException {
 
 		String query = "UPDATE contacts SET name = ?, surname = ? phonenumber = ? WHERE id = ? AND WHERE phonenumber = ?";
 

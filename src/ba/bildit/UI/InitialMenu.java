@@ -10,6 +10,7 @@ public class InitialMenu {
 	
 	public static void initialMenu() {
 		
+		System.out.println("----- PHONEBOOK -----");
 		System.out.println("1. LOGIN");
 		System.out.println("2. REGISTER");
 		

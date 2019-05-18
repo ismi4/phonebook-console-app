@@ -83,11 +83,12 @@ public class ContactDAOImplementation implements ContactDAO {
 	@Override
 	public void deleteContact(int id, int phoneNumber) throws SQLException {
 
-		String query = "DELETE FROM contacts? WHERE id = ?";
+		String query = "DELETE FROM contacts WHERE id = ? AND phonenumber = ?";
 
 		try (PreparedStatement statement = connection.prepareStatement(query);) {
 
 			statement.setInt(1, id);
+			statement.setInt(2, phoneNumber);
 
 			statement.executeUpdate();
 
